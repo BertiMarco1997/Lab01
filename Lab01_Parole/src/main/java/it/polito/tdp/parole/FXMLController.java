@@ -31,15 +31,47 @@ public class FXMLController {
 
     @FXML
     private Button btnReset;
+    
+    @FXML
+    private Button btnCancella;
+    
+    @FXML
+    private TextArea txtTempi;
+
 
     @FXML
     void doInsert(ActionEvent event) {
-    	// TODO
+    	
+    	String testo = txtParola.getText();
+    	double start = System.nanoTime();
+    	elenco.addParola(testo);
+    	double stop = System.nanoTime();
+    	txtParola.clear();
+    	elenco.getElenco();
+    	txtResult.setText(elenco.toString());
+    	txtTempi.setText("L'inserimento della parola " + "'" + testo + "'" + " ha richiesto " + (stop-start) + " nanosecondi.");
+    	
     }
 
     @FXML
     void doReset(ActionEvent event) {
-    	// TODO
+    	
+    	elenco.reset();
+    	txtResult.clear();
+    	txtTempi.clear();
+    }
+    
+    @FXML
+    void doCancella(ActionEvent event) {
+    	
+    	String parolaDaCancellare = txtResult.getSelectedText();
+    	double start = System.nanoTime();
+    	elenco.cancellaParola(parolaDaCancellare);
+    	double stop = System.nanoTime();
+    	elenco.getElenco();
+    	txtResult.setText(elenco.toString());
+    	txtTempi.setText("La cancellazione della parola " + "'" + parolaDaCancellare + "'" + " ha richiesto " + (stop-start) + " nanosecondi.");
+
     }
 
     @FXML
